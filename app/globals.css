@@ -91,10 +91,23 @@ button {
   letter-spacing: 0.5px;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .nav-menu {
   display: flex;
   align-items: center;
   gap: 25px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .nav-link {
@@ -983,50 +996,95 @@ footer {
   color: #ddb877;
 }
 
-/* --- SELECTORES DE IDIOMA --- */
-.lang-selector select {
+/* --- SELECTOR DE IDIOMA --- */
+.lang-switcher {
+  position: relative;
+}
+
+.lang-switcher-trigger {
+  display: flex;
+  align-items: center;
+  gap: 7px;
   background-color: var(--white);
   color: var(--primary-blue);
   border: 2px solid var(--primary-blue);
-  padding: 5px 10px;
+  padding: 7px 14px;
   border-radius: 20px;
   font-family: inherit;
   font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
-  outline: none;
-  transition: all 0.3s;
+  transition: background-color 0.3s;
 }
 
-.lang-selector select:hover {
+.lang-switcher-trigger:hover {
   background-color: var(--light-bg);
 }
 
-.mobile-lang-fab {
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 1000;
-  border-radius: 50%;
+.lang-switcher-trigger .fa-globe {
+  font-size: 0.85rem;
 }
 
-.mobile-lang-fab select {
-  appearance: none;
-  background-color: var(--primary-blue);
-  color: var(--white);
+.lang-switcher-chevron {
+  font-size: 0.65rem;
+  transition: transform 0.25s ease;
+}
+
+.lang-switcher-chevron.open {
+  transform: rotate(180deg);
+}
+
+.lang-switcher-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background-color: var(--white);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  padding: 6px;
+  min-width: 180px;
+  list-style: none;
+  z-index: 1100;
+}
+
+.lang-switcher-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
   border: none;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  text-align-last: center;
+  background: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-main);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s;
 }
 
-.mobile-lang-fab select:hover {
-  background-color: var(--dark-blue);
-  color: var(--white);
+.lang-switcher-option:hover {
+  background-color: var(--light-bg);
+}
+
+.lang-switcher-option.active {
+  color: var(--primary-blue);
+  font-weight: 700;
+  background-color: rgba(10, 66, 155, 0.06);
+}
+
+.lang-switcher-option .fa-check {
+  margin-left: auto;
+  color: var(--primary-blue);
+  font-size: 0.8rem;
+}
+
+.lang-switcher-flag {
+  font-size: 1.15rem;
+  line-height: 1;
 }
 
 /* --- WHATSAPP FLOTANTE --- */
@@ -1117,12 +1175,6 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .desktop-lang {
-    display: none;
-  }
-  .mobile-lang-fab {
-    display: block;
-  }
   .nav-toggle {
     display: block;
   }
@@ -1137,9 +1189,18 @@ footer {
     padding: 20px 0;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     gap: 15px;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
   }
   .nav-menu.active {
     display: flex;
+  }
+  .lang-switcher-trigger {
+    padding: 7px 11px;
+    font-size: 0.8rem;
+  }
+  .lang-switcher-menu {
+    right: -10px;
   }
 
   /* Estilos del Acordeón en Móviles */

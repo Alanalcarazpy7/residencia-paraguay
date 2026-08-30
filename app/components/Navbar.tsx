@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useApp } from "../AppContext";
-import { Lang, langNames } from "../i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const NAV_LINKS: { id: string; key: "nav_inicio" | "nav_servicios" | "nav_cedula" }[] = [
   { id: "inicio", key: "nav_inicio" },
@@ -11,7 +11,7 @@ const NAV_LINKS: { id: string; key: "nav_inicio" | "nav_servicios" | "nav_cedula
 ];
 
 export default function Navbar() {
-  const { t, lang, setLang, view, goHome, goAbout, openWhatsApp } = useApp();
+  const { t, view, goHome, goAbout, openWhatsApp } = useApp();
   const [menuOpen, setMenuOpen] = useState(false);
 
   function scrollToId(id: string) {
@@ -57,52 +57,46 @@ export default function Navbar() {
             <span className="logo-subtitle">{t.logo_subtitle}</span>
           </div>
         </a>
-        <button
-          className="nav-toggle"
-          aria-label={t.menu_open_label}
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          <i className={`fa-solid ${menuOpen ? "fa-xmark" : "fa-bars"}`} />
-        </button>
-        <nav className={`nav-menu${menuOpen ? " active" : ""}`}>
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              className="nav-link"
-              onClick={(e) => handleNavClick(e, link.id)}
-            >
-              {t[link.key]}
+
+        <div className="nav-right">
+          <nav className={`nav-menu${menuOpen ? " active" : ""}`}>
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                className="nav-link"
+                onClick={(e) => handleNavClick(e, link.id)}
+              >
+                {t[link.key]}
+              </a>
+            ))}
+            <a href="#sobre-mi" className="nav-link" onClick={handleAboutClick}>
+              {t.nav_sobre_mi}
             </a>
-          ))}
-          <a href="#sobre-mi" className="nav-link" onClick={handleAboutClick}>
-            {t.nav_sobre_mi}
-          </a>
-          <a
-            href="#"
-            className="btn-contacto-nav"
-            onClick={(e) => {
-              e.preventDefault();
-              setMenuOpen(false);
-              openWhatsApp(t.wa_general_msg);
-            }}
-          >
-            <i className="fa-brands fa-whatsapp" /> {t.nav_contacto}
-          </a>
-          <div className="lang-selector desktop-lang">
-            <select
-              value={lang}
-              onChange={(e) => setLang(e.target.value as Lang)}
-              aria-label="Idioma"
+            <a
+              href="#"
+              className="btn-contacto-nav"
+              onClick={(e) => {
+                e.preventDefault();
+                setMenuOpen(false);
+                openWhatsApp(t.wa_general_msg);
+              }}
             >
-              {(Object.keys(langNames) as Lang[]).map((code) => (
-                <option key={code} value={code}>
-                  {langNames[code]}
-                </option>
-              ))}
-            </select>
+              <i className="fa-brands fa-whatsapp" /> {t.nav_contacto}
+            </a>
+          </nav>
+
+          <div className="nav-actions">
+            <LanguageSwitcher />
+            <button
+              className="nav-toggle"
+              aria-label={t.menu_open_label}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              <i className={`fa-solid ${menuOpen ? "fa-xmark" : "fa-bars"}`} />
+            </button>
           </div>
-        </nav>
+        </div>
       </div>
     </header>
   );

@@ -16,7 +16,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.gestiondereside
 // El valor también queda disponible por variable de entorno en Vercel; el
 // fallback permite verificar el dominio inmediatamente tras el despliegue.
 const googleVerification =
-  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  process.env.GOOGLE_SITE_VERIFICATION ||
   "XpSGvIxkBlvA0UIu_vCNmiaDvSpsdL9GufvpXcNwsMI";
 
 export const metadata: Metadata = {

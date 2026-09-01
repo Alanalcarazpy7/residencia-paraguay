@@ -10,9 +10,14 @@ const poppins = Poppins({
   display: "swap",
 });
 
-// TODO: reemplazar por el dominio definitivo una vez conectado en Vercel
-// (o configurar la variable de entorno NEXT_PUBLIC_SITE_URL en el proyecto de Vercel).
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://residencia-paraguay.vercel.app";
+// URL pública única del sitio. Puede sobrescribirse en Vercel mediante
+// NEXT_PUBLIC_SITE_URL (sin barra final).
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.gestionderesidencias.com.py";
+// El valor también queda disponible por variable de entorno en Vercel; el
+// fallback permite verificar el dominio inmediatamente tras el despliegue.
+const googleVerification =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  "XpSGvIxkBlvA0UIu_vCNmiaDvSpsdL9GufvpXcNwsMI";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -38,6 +43,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Lic. Roberto Morinigo Alvarenga" }],
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
+  ...(googleVerification
+    ? { verification: { google: googleVerification } }
+    : {}),
   icons: { icon: "/images/logo2.png" },
   openGraph: {
     type: "website",
